@@ -88,7 +88,7 @@ if st.session_state.username:
         st.session_state.audio_filename = audio_filename
 
         # Provide playback option for the recorded audio
-        st.audio(audio.export().read())  # Play audio directly
+        st.audio(st.session_state.audio_filename)
 
     # Stage 2: Upload/Discard Part (only show after recording)
     if "audio_filename" in st.session_state and st.session_state.audio_filename:
@@ -104,9 +104,9 @@ if st.session_state.username:
         with col1:
             if st.button("Upload Recording"):
                 try:
-                    # Upload audio to Firebase Storage with specified content type
+                    # Upload audio to Firebase Storage
                     blob = bucket.blob(f"audio/{st.session_state.audio_filename}")
-                    blob.upload_from_filename(st.session_state.audio_filename, content_type="audio/wav")
+                    blob.upload_from_filename(st.session_state.audio_filename)
                     st.write("Audio uploaded to Firebase.")
 
                     # Store metadata in Firestore
