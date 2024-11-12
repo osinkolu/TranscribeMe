@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *.pyo
+app2.py
 
 # Jupyter Notebook checkpoints (if any)
 .ipynb_checkpoints/

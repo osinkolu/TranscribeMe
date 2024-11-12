@@ -1,6 +1,5 @@
 streamlit
-sounddevice
-numpy
-scipy
 firebase-admin
 pandas
+streamlit-audiorecorder
+pydub
