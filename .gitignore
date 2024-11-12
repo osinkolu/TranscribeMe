@@ -17,7 +17,6 @@ __pycache__/
 .secrets.toml
 
 # Data files
-*.csv
 *.xlsx
 *.db
 *.sqlite3
