@@ -1,0 +1,6 @@
+streamlit
+sounddevice
+numpy
+scipy
+firebase-admin
+pandas

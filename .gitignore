@@ -1,0 +1,42 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Jupyter Notebook checkpoints (if any)
+.ipynb_checkpoints/
+
+# Environment configuration files
+.env
+*.env
+
+# Firebase credentials
+*.json  # Avoid adding your Firebase credentials JSON file to version control
+
+# Streamlit secrets (for Streamlit Cloud)
+.secrets.toml
+
+# Data files
+*.csv
+*.xlsx
+*.db
+*.sqlite3
+
+# Virtual environment
+venv/
+.env/
+
+# macOS-specific files
+.DS_Store
+
+# Windows-specific files
+Thumbs.db
+
+# Log files
+*.log
+
+# IDE and editor-specific files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
