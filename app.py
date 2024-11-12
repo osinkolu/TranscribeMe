@@ -1,16 +1,12 @@
 import streamlit as st
-import sounddevice as sd
-import numpy as np
-from scipy.io.wavfile import write
+from audiorecorder import audiorecorder
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
 import time
 import random
 import string
+import os, json
 import pandas as pd
-import os
-import json
-# from dotenv import load_dotenv
 
 # load_dotenv()
 
@@ -79,34 +75,23 @@ if st.session_state.username:
     else:
         st.write("No more prompts available for you to record. Thank you for your contributions!")
 
-    # Define recording settings
-    fs = 44100  # Sample rate
-    duration = 5  # Duration of recording in seconds
-
-    # Stage 1: Recording Part
-    if "audio_filename" not in st.session_state:
-        st.session_state.audio_filename = None
-
-    if st.button("Start Recording") and st.session_state.current_prompt:
-        st.write("Recording... Please read the prompt.")
-        audio_data = sd.rec(int(duration * fs), samplerate=fs, channels=2)
-        sd.wait()  # Wait until recording is finished
-        st.write("Recording complete!")
-
+    # Stage 1: Audio Recording with streamlit-audiorecorder
+    audio = audiorecorder("Click to record", "Click to stop recording")
+    if audio and len(audio) > 0:
         # Create a unique filename using username, timestamp, and random characters
         timestamp = int(time.time())
         random_str = ''.join(random.choices(string.ascii_lowercase + string.digits, k=4))
-        st.session_state.audio_filename = f"{st.session_state.username}_{timestamp}_{random_str}.wav"
+        audio_filename = f"{st.session_state.username}_{timestamp}_{random_str}.wav"
 
-        # Save recording to a WAV file
-        write(st.session_state.audio_filename, fs, audio_data)
-        st.write(f"Audio saved locally as {st.session_state.audio_filename}.")
-        
-        # Provide playback option
-        st.audio(st.session_state.audio_filename)
+        # Export and save the recorded audio to a .wav file
+        audio.export(audio_filename, format="wav")
+        st.session_state.audio_filename = audio_filename
+
+        # Provide playback option for the recorded audio
+        st.audio(audio.export().read())  # Play audio directly
 
     # Stage 2: Upload/Discard Part (only show after recording)
-    if st.session_state.audio_filename:
+    if "audio_filename" in st.session_state and st.session_state.audio_filename:
         st.write("Review your recording and choose an action:")
 
         # Feedback section
