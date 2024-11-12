@@ -10,9 +10,9 @@ import string
 import pandas as pd
 import os
 import json
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
 firebase_secrets = json.loads(os.environ['firebase_credentials'])
 storage_bucket = os.environ['storage_bucket']
