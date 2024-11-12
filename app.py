@@ -104,9 +104,9 @@ if st.session_state.username:
         with col1:
             if st.button("Upload Recording"):
                 try:
-                    # Upload audio to Firebase Storage
+                    # Upload audio to Firebase Storage with specified content type
                     blob = bucket.blob(f"audio/{st.session_state.audio_filename}")
-                    blob.upload_from_filename(st.session_state.audio_filename)
+                    blob.upload_from_filename(st.session_state.audio_filename, content_type="audio/wav")
                     st.write("Audio uploaded to Firebase.")
 
                     # Store metadata in Firestore
